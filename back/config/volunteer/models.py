@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import Users
 
 
 class Category(models.Model):
@@ -7,3 +8,12 @@ class Category(models.Model):
 
 
 class Wallet(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE,
+                             primary_key=True)
+    balance = models.PositiveBigIntegerField(default=100)
+
+"""
+class History(models.Model):
+    user = models.ForeignKey(Users, on_delete=models.CASCADE)
+    """
+
