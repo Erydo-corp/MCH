@@ -5,4 +5,4 @@ from django.contrib.auth.models import AbstractUser
 
 
 class Users(AbstractUser):
-    pass
+    is_organization = models.BooleanField(default=False)
