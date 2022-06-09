@@ -22,21 +22,9 @@ class Users(AbstractUser):
 
 
 class City(models.Model):
-    """Город"""
-    name = models.CharField(max_length=50, blank=True, null=True)
-    users = models.ForeignKey(
-        Users,
-        verbose_name='Пользователь',
-        on_delete=models.PROTECT,
-        blank=True,
-        null=True
-    )
+    name = models.CharField(max_length=50)
+    users = models.ForeignKey(Users, on_delete=models.PROTECT)
 
-    verbose_name = "Город"
-    verbose_name_plural = "Города"
-
-    def __str__(self):
-        return self.name
 
 
 """
