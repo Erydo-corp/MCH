@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 
 class Users(AbstractUser):
-    """Модель абстрактного пользователя"""
+    """Модель пользователя"""
     # Волонтер
     age = models.PositiveSmallIntegerField(help_text="Возраст", null=True, blank=True)
     education = models.CharField(max_length=25, help_text="Образование")
