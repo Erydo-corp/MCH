@@ -17,6 +17,12 @@ class Wallet(models.Model):
     balance = models.PositiveBigIntegerField(default=100)
 
 
+class Calendar(models.Model):
+    """Календарь волонтера с текущими событиями"""
+    #
+    pass
+
+
 """
 class History(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)

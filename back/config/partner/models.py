@@ -44,3 +44,10 @@ class Organization(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Requirement(models.Model):
+    """Требования для вакансий"""
+    name = models.CharField('требование', max_length=15)
+    description = models.TextField('описание', max_length=200)
+    # подумать над связью
