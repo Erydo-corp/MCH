@@ -1,4 +1,5 @@
 from django.db import models
+
 from volunteer.models import Category
 
 
@@ -35,12 +36,7 @@ class Project(models.Model):
 
 class Organization(models.Model):
     """Организация"""
-    project = models.ForeignKey(
-        Project,
-        on_delete=models.CASCADE,
-        related_name='projects',
-        verbose_name='проект организации'
-    )
+    project = models.ManyToManyField(Project, verbose_name='проект организации')
     name = models.CharField('имя организации', max_length=100)
     unp = models.CharField('УНП', max_length=50, help_text='учётный номер плательщика')
     phone = models.CharField('номер телефона', max_length=30)
