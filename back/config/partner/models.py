@@ -9,6 +9,11 @@ class Vacancy(models.Model):
     reward = models.PositiveSmallIntegerField('награда волонтера',
                                               help_text='количество баллов для волонтера')
     slug = models.SlugField('ссылка', unique=True)
+    discription = models.TextField(help_text="Описание вакансии")
+    data = models.DateTimeField('дата создания', auto_now_add=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    users = models.ForeignKey("users.Users", on_delete=models.CASCADE)
+    city = models.OneToOneField("users.City", on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -19,13 +24,9 @@ class Vacancy(models.Model):
 
 class Project(models.Model):
     """Проекты организаций"""
-    vacancy = models.ManyToManyField(Vacancy, help_text='связь с таблицей вакансии')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    name = models.CharField('название', max_length=100)
-    photo = models.ImageField('фотография', upload_to='image/')
-    data = models.DateTimeField('дата создания', auto_now_add=True)
-    description = models.TextField('описание', max_length=500)
-    slug = models.SlugField('ссылка', unique=True)
+    vacancy = models.ForeignKey(Vacancy, on_delete=models.PROTECT,
+                                help_text='История вакансий')
+    name = models.CharField('название', max_length=50)
 
     def __str__(self):
         return self.name
@@ -34,20 +35,8 @@ class Project(models.Model):
         pass
 
 
-class Organization(models.Model):
-    """Организация"""
-    project = models.ManyToManyField(Project, verbose_name='проект организации')
-    name = models.CharField('имя организации', max_length=100)
-    unp = models.CharField('УНП', max_length=50, help_text='учётный номер плательщика')
-    phone = models.CharField('номер телефона', max_length=30)
-    email = models.EmailField('email')
-
-    def __str__(self):
-        return self.name
-
-
 class Requirement(models.Model):
     """Требования для вакансий"""
     name = models.CharField('требование', max_length=15)
     description = models.TextField('описание', max_length=200)
-    # подумать над связью
+    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE)
