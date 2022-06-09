@@ -1,11 +1,7 @@
 from django.contrib import admin
 
-from .models import Organization, Project, Vacancy
+from .models import Project, Vacancy
 
-
-@admin.register(Organization)
-class OrganizationAdmin(admin.ModelAdmin):
-    pass
 
 
 @admin.register(Project)
