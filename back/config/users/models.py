@@ -22,3 +22,8 @@ class Users(AbstractUser):
     category = models.ForeignKey("volunteer.Category", on_delete=models.PROTECT,
                                  blank=True, null=True,
                                  help_text="Категория помощи")
+
+
+class City(models.Model):
+    name = models.CharField(max_length=50)
+    users = models.ForeignKey(Users, on_delete=models.PROTECT)
