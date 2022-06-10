@@ -1,10 +1,13 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
+
 from partner.models import Project, Vacancy
 from shop.models import Section, Product
 from users.models import Users
 from volunteer.models import Category, Wallet
+from .models import Project, Vacancy
+
 
 
 # Приложение партнеров
