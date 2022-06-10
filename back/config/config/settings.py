@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     "volunteer",
     "users",
     "partner",
-    #"shop",
+    "shop",
 ]
 
 MIDDLEWARE = [
