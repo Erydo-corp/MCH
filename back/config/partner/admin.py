@@ -25,7 +25,7 @@ class ProjectAdmin(admin.ModelAdmin):
 @admin.register(Vacancy)
 class VacancyAdmin(admin.ModelAdmin):
     """Админка вакансий"""
-    prepopulated_fields = {'slug': ('name', 'company_name', 'direction', )}
+    prepopulated_fields = {'slug': ('name', 'company_name', 'direction',)}
 
 
 # Приложение магазина

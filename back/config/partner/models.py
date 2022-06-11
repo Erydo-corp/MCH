@@ -68,8 +68,8 @@ class Vacancy(models.Model):
     start_date = models.DateTimeField('начало мероприятия', help_text='Дата начала помощи', blank=True, null=True)
     end_data = models.DateTimeField('конец мероприятия', help_text='Дата завершения набора на вакансию', blank=True,
                                     null=True)
-    allowable_age = models.PositiveSmallIntegerField('возраст волонтера', blank=True, null=True,
-                                                     help_text='Подходящий возраст волонтера')
+    allowable_age = models.CharField('возраст волонтера', blank=True, null=True, max_length=10,
+                                     help_text='Подходящий возраст волонтера')
     mail_for_response = models.EmailField('эл.почта', help_text='E-mail для выгрузки откликов по вакансии')
     necessary_skills = TaggableManager('необходимые навыки')
     service = models.TextField('сервисы для волонтера', max_length=200,

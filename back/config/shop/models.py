@@ -22,7 +22,7 @@ class Product(models.Model):
     """Товары магазина"""
     category = models.ForeignKey(
         Category,
-        related_name='products',
+        related_name='categories',
         on_delete=models.CASCADE,
         verbose_name='Категория товара',
     )
