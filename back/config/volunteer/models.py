@@ -3,13 +3,19 @@ from django.db import models
 from users.models import Users
 
 
-class Category(models.Model):
-    """Сферы деятельности"""
-    title = models.CharField('название сферы', max_length=60, help_text="Категория помощи", blank=True, null=True)
+class Direction(models.Model):
+    """Направление деятельности"""
+    title = models.CharField(
+        'направление',
+        max_length=60,
+        help_text="направление помощи",
+        blank=True,
+        null=True
+    )
 
     class Meta:
-        verbose_name = "сферу деятельности"
-        verbose_name_plural = "сферы деятельности"
+        verbose_name = "направление деятельности"
+        verbose_name_plural = "направления деятельности"
 
     def __str__(self):
         return self.title
@@ -17,12 +23,9 @@ class Category(models.Model):
 
 class Wallet(models.Model):
     """Кошелек пользователя"""
-    # Лучше использовать связь OneToOneField
     user = models.OneToOneField(
         Users,
         on_delete=models.CASCADE,
-        null=True,
-        blank=True,
         verbose_name='волонтер'
     )
     balance = models.PositiveBigIntegerField('баланс', default=100)

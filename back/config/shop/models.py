@@ -1,8 +1,8 @@
 from django.db import models
 
 
-class Section(models.Model):
-    """Категории внутри магазина"""
+class Category(models.Model):
+    """Категории магазина"""
     name = models.CharField('название категории', max_length=200)
     slug = models.SlugField('ссылка', max_length=200, unique=True)
 
@@ -21,7 +21,7 @@ class Section(models.Model):
 class Product(models.Model):
     """Товары магазина"""
     category = models.ForeignKey(
-        Section,
+        Category,
         related_name='products',
         on_delete=models.CASCADE,
         verbose_name='Категория товара',

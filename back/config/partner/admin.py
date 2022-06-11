@@ -1,10 +1,10 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from partner.models import Project, Vacancy
-from shop.models import Section, Product
+from partner.models import Project, Vacancy, TargetAudience
+from shop.models import Category, Product
 from users.models import Users
-from volunteer.models import Category, Wallet
+from volunteer.models import Direction, Wallet
 
 
 # Приложение партнеров
@@ -25,7 +25,7 @@ class ProjectAdmin(admin.ModelAdmin):
 @admin.register(Vacancy)
 class VacancyAdmin(admin.ModelAdmin):
     """Админка вакансий"""
-    prepopulated_fields = {'slug': ('name', 'category')}
+    prepopulated_fields = {'slug': ('name', 'company_name', 'direction', )}
 
 
 # Приложение магазина
@@ -41,7 +41,7 @@ class ProductAdmin(admin.ModelAdmin):
     get_image.short_description = 'Картинка продукта'
 
 
-@admin.register(Section)
+@admin.register(Category)
 class SectionAdmin(admin.ModelAdmin):
     """Админка категорий магазина"""
     prepopulated_fields = {'slug': ('name',)}
@@ -61,9 +61,15 @@ class WalletAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+@admin.register(Direction)
+class DirectionAdmin(admin.ModelAdmin):
     """Админка сфер деятельности"""
+    pass
+
+
+@admin.register(TargetAudience)
+class TargetAudience(admin.ModelAdmin):
+    """Админка целевой аудитории"""
     pass
 
 

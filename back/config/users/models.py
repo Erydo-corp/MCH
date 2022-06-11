@@ -17,7 +17,7 @@ class Users(AbstractUser):
     name = models.CharField('имя партнера', max_length=25, blank=True, null=True, help_text="Названии организации")
     is_partner = models.BooleanField('это партнер', default=False)
     category = models.ForeignKey(
-        "volunteer.Category",
+        "volunteer.Direction",
         on_delete=models.PROTECT,
         blank=True,
         null=True,
@@ -29,23 +29,24 @@ class Users(AbstractUser):
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
 
-    def __str__(self):
-        return self.name
+# Вызывает ошибку при добавление вакансии
+    # def __str__(self):
+    #     return self.name
 
 
-class City(models.Model):
-    """Город"""
+class Division(models.Model):
+    """Административный округ"""
     name = models.CharField(max_length=50, blank=True, null=True)
     users = models.ForeignKey(
         Users,
-        verbose_name='Пользователь',
+        verbose_name='пользователь',
         on_delete=models.PROTECT,
         blank=True,
         null=True
     )
 
-    verbose_name = "Город"
-    verbose_name_plural = "Города"
+    verbose_name = "округ"
+    verbose_name_plural = "округи"
 
     def __str__(self):
         return self.name
