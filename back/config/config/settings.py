@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "rest_framework",
+    # 'drf_auto',
     'django_filters',
     "taggit",
     "volunteer",
@@ -61,10 +62,13 @@ TEMPLATES = [
 ]
 
 REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+
     'DEFAULT_PERMISSION_CLASSES': [
         # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
         'rest_framework.permissions.AllowAny',
-
     ]
 }
 
@@ -122,3 +126,36 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 TAGGIT_CASE_INSENSITIVE = True
+
+REST_FRAMEWORK_AUTO = {
+    'DOCS': {
+        'HIDE_DOCS': False,
+        'SERIALIZERS_ATTR_NAME': 'docs_serializer_classes',
+        'EXCLUDE_FIELDS_ATTR_NAME': 'docs_exclude_fields',
+        'SERIALIZER_DOC_ATTR': 'doc_method_fields_classes',
+        'PARSER_CLASS': 'drf_auto.autodocs.parsers.DefaultParser'
+    },
+    'AUTO_REST': {
+        'EXCEPTIONS': {
+            'PROCESS_EXCEPT': True,
+            'PROCESS_EXCEPT_HANDLER': None,
+            'CODE_EXCEPTION_LIST': 400,
+            'STATUS_EXCEPTION_LIST': 400,
+            'EXCEPTION_LIST': ['rest_framework.serializers.ValidationError'],
+            'EXCEPTION_DICT': {
+                'rest_framework.serializers.ValidationError': {
+                    'status': 400,
+                    'code': 400,
+                    'message': 'Ошибка валидации. Неверные данные.',
+                    'fields': {'status': 'status', 'code': 'code', 'message': 'message', 'data': 'data'},
+                    'data_attr': 'detail',
+                },
+            },
+        },
+    },
+    'SERIALIZER_DOC_CODES': {'common': {}, 'specific': {}},
+    'SERIALIZERS_RESPONSE_FIELD': 'serializer_classes',
+    'SERIALIZERS_REQUEST_FIELD': 'serializer_classes',
+    'SERIALIZERS_REQUEST_KEY': 'in',
+    'SERIALIZERS_RESPONSE_KEY': 'out'
+}

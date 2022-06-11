@@ -1,31 +1,48 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from partner.models import Project, Vacancy, TargetAudience
+from partner.models import Project, Vacancy, TargetAudience, \
+    HistoryResponse, Requirement, Bonus, Task
 from shop.models import Category, Product
 from users.models import Users
-from volunteer.models import Direction, Wallet
+from volunteer.models import Sphere, Wallet
 
 
 # Приложение партнеров
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     """Админка проекта"""
-    # readonly_fields = ('get_image',)
-
-    # нужна картинка проекта
-    """
-    def get_image(self, obj):
-        return mark_safe(f'<img src={obj.main_image.url} width="100" height="120"')
-
-    get_image.short_description = 'Product image'
-    """
+    pass
 
 
 @admin.register(Vacancy)
 class VacancyAdmin(admin.ModelAdmin):
     """Админка вакансий"""
-    prepopulated_fields = {'slug': ('name', 'company_name', 'direction', )}
+    prepopulated_fields = {'slug': ('name', 'sphere',)}
+
+
+@admin.register(HistoryResponse)
+class HistoryResponseAdmin(admin.ModelAdmin):
+    """История откликов"""
+    pass
+
+
+@admin.register(Requirement)
+class RequirementAdmin(admin.ModelAdmin):
+    """Требования"""
+    pass
+
+
+@admin.register(Bonus)
+class BonusAdmin(admin.ModelAdmin):
+    """Бонусы"""
+    pass
+
+
+@admin.register(Task)
+class TaskAdmin(admin.ModelAdmin):
+    """Задачи"""
+    pass
 
 
 # Приложение магазина
@@ -61,7 +78,7 @@ class WalletAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(Direction)
+@admin.register(Sphere)
 class DirectionAdmin(admin.ModelAdmin):
     """Админка сфер деятельности"""
     pass
@@ -70,7 +87,7 @@ class DirectionAdmin(admin.ModelAdmin):
 @admin.register(TargetAudience)
 class TargetAudience(admin.ModelAdmin):
     """Админка целевой аудитории"""
-    pass
+    prepopulated_fields = {'slug': ('name',)}
 
 
 admin.site.site_header = "Сервис по размещению и поиску задач для волонтеров"

@@ -11,13 +11,12 @@ class Users(AbstractUser):
     description = models.TextField('о себе', max_length=500,
                                    help_text="О себе, максимальная длинна 500 символов", blank=True, null=True)
     photo = models.ImageField('фотография', upload_to="photo/", help_text="Фотография", blank=True, null=True)
-    # city
 
     # Партнер
     name = models.CharField('имя партнера', max_length=25, blank=True, null=True, help_text="Названии организации")
     is_partner = models.BooleanField('это партнер', default=False)
     category = models.ForeignKey(
-        "volunteer.Direction",
+        "volunteer.Sphere",
         on_delete=models.PROTECT,
         blank=True,
         null=True,
@@ -34,7 +33,7 @@ class Users(AbstractUser):
     #     return self.name
 
 
-class Division(models.Model):
+class AdministrativeRegion(models.Model):
     """Административный округ"""
     name = models.CharField(max_length=50, blank=True, null=True)
     users = models.ForeignKey(
@@ -45,18 +44,8 @@ class Division(models.Model):
         null=True
     )
 
-    verbose_name = "округ"
+    verbose_name = "административный округ"
     verbose_name_plural = "округи"
 
     def __str__(self):
         return self.name
-
-
-"""
-Для открытия поля с опытом при регистрации волонтера 
-    STATUS_CHOICES = (
-        ('no', 'Нет опыта'),
-        ('yes', 'Есть опыт'),
-    )
-    experience = models.CharField('Опыт', max_length=15, choices=STATUS_CHOICES)
-"""

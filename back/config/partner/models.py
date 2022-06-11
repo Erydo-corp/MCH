@@ -2,8 +2,8 @@ from django.db import models
 
 from taggit.managers import TaggableManager
 
-from volunteer.models import Direction
-from users.models import Division, Users
+from volunteer.models import Sphere
+from users.models import AdministrativeRegion, Users
 
 
 class TargetAudience(models.Model):
@@ -19,9 +19,6 @@ class TargetAudience(models.Model):
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        pass
-
 
 class Vacancy(models.Model):
     """Вакансии компании"""
@@ -31,69 +28,65 @@ class Vacancy(models.Model):
     )
     TYPE_OF_WORK = (
         ('without payment', 'Без оплаты'),
-        ('permanent job', 'Постоянная'),
+        ('full time', 'Постоянная'),
         ('internship', 'Стажировка'),
         ('side job', 'Подработка')
     )
-    URGENCY = (
+    URGENT = (
         ('urgently', 'Срочно'),
-        ('not urgently', 'Не срочно'),
         ('within a week', 'В течение недели'),
         ('within a month', 'В течение месяца')
     )
-    company_name = models.CharField('название компании', max_length=50)
-    direction = models.ForeignKey(Direction, on_delete=models.CASCADE, verbose_name='направление')
-    type_of_work = models.CharField(
+
+    # Информация от партнера
+    company_name = models.ForeignKey(
+        Users,
+        on_delete=models.CASCADE,
+        verbose_name='название компании',
+        blank=True,
+        null=True
+    )
+    sphere = models.ForeignKey(
+        Sphere,
+        on_delete=models.CASCADE,
+        verbose_name='сфера деятельности'
+    )
+    name = models.CharField('наименование вакансии', max_length=100)
+    type = models.CharField(
         'тип работы',
         max_length=50,
         choices=TYPE_OF_WORK,
         default='without payment',
     )
-    name = models.CharField('наименование вакансии', max_length=100)
-    terms = models.TextField('условия', max_length=100, help_text='Условия работы для волонтера')
-    tasks = models.TextField('задачи', max_length=500, help_text='Описание задач для волонтера')
-    description = models.TextField('описание', max_length=1000, help_text='Требования к кандидатам и функционал')
+    start_date = models.DateTimeField('начало мероприятия', blank=True, null=True)
+    end_data = models.DateTimeField('конец мероприятия', blank=True, null=True)
     salary = models.PositiveSmallIntegerField('заработная плата', blank=True, null=True)
-    bonus = models.PositiveSmallIntegerField('размер бонусов', blank=True, null=True)
-    motivation = models.TextField('мотивация волонтера', max_length=500,
-                                  help_text='Описание мотивации волонтера', blank=True, null=True)
-    target_audience = models.ForeignKey(
+    coins = models.PositiveSmallIntegerField('размер бонусов', blank=True, null=True)
+    urgency = models.CharField('срочность публикации', max_length=30, choices=URGENT, default='urgently')
+    location = models.CharField('местоположение', max_length=100, blank=True, null=True,
+                                help_text='Место проведения мероприятия')
+    email = models.EmailField('эл.почта', blank=True, null=True,
+                              help_text='E-mail для выгрузки откликов')
+
+    # Описание требуемого волонтера
+    min_age = models.PositiveSmallIntegerField('минимальный возраст', blank=True, null=True)
+    max_age = models.PositiveSmallIntegerField('максимальный возраст', blank=True, null=True)
+    necessary_skills = TaggableManager('необходимые навыки')
+    audience = models.ForeignKey(
         TargetAudience,
         on_delete=models.SET_NULL,
         blank=True,
         null=True,
         verbose_name='целевая аудитория',
     )
-    publication_urgency = models.CharField('срочность публикации', max_length=30, choices=URGENCY, default='urgently')
-    start_date = models.DateTimeField('начало мероприятия', help_text='Дата начала помощи', blank=True, null=True)
-    end_data = models.DateTimeField('конец мероприятия', help_text='Дата завершения набора на вакансию', blank=True,
-                                    null=True)
-    allowable_age = models.PositiveSmallIntegerField('возраст волонтера', blank=True, null=True,
-                                                     help_text='Подходящий возраст волонтера')
-    mail_for_response = models.EmailField('эл.почта', help_text='E-mail для выгрузки откликов по вакансии')
-    necessary_skills = TaggableManager('необходимые навыки')
-    service = models.TextField('сервисы для волонтера', max_length=200,
-                               help_text='Питание, экипировка, подтверждение опыта в ЛКВ')
-    location = models.CharField('местоположение', max_length=100, help_text='Место проведения мероприятия')
-    participation = models.CharField('способ участия', max_length=20, choices=PARTICIPATION)
-    position = models.CharField('роль волонтера/должность', max_length=50, blank=True, null=True)
-    division = models.OneToOneField(
-        Division,
+    region = models.OneToOneField(
+        AdministrativeRegion,
         on_delete=models.CASCADE,
         blank=True,
         null=True,
         verbose_name='административный округ'
     )
-    users = models.ForeignKey(
-        Users,
-        on_delete=models.CASCADE,
-        verbose_name='компания',
-        help_text='вакансия от партнера',
-        blank=True,
-        null=True
-    )
     slug = models.SlugField('ссылка', max_length=200, unique=True)
-    image = models.ImageField('картинка вакансии', upload_to='vacancy/')
 
     class Meta:
         verbose_name = "вакансию"
@@ -102,12 +95,9 @@ class Vacancy(models.Model):
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        pass
-
 
 class Project(models.Model):
-    """Проект компаний"""
+    """Проекты компаний"""
     vacancy = models.ForeignKey(
         Vacancy,
         on_delete=models.PROTECT,
@@ -124,26 +114,51 @@ class Project(models.Model):
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        pass
+
+class HistoryResponse(models.Model):
+    """История откликов"""
+    volunteer = models.ForeignKey(Users, on_delete=models.CASCADE, blank=True, null=True)
+    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "отклик"
+        verbose_name_plural = "история откликов"
 
 
-class Response(models.Model):
-    """
-    Отклик
-    Возможно понадобиться для выгрузки на Email
-    """
-    pass
+class Requirement(models.Model):
+    """Требования для вакансий"""
+    name = models.TextField('требование', max_length=200, blank=True, null=True)
+    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, blank=True, null=True)
 
-# class Requirement(models.Model):
-#     """Требования для вакансий"""
-#     name = models.CharField('требование', max_length=15, blank=True, null=True)
-#     description = models.TextField('описание', max_length=200, blank=True, null=True)
-#     vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, blank=True, null=True)
-#
-#     class Meta:
-#         verbose_name = "требования"
-#         verbose_name_plural = "требование"
-#
-#     def __str__(self):
-#         return self.name
+    class Meta:
+        verbose_name = "требования"
+        verbose_name_plural = "требование"
+
+    def __str__(self):
+        return self.name
+
+
+class Bonus(models.Model):
+    """Список бонусов для волонтера"""
+    name = models.TextField('задача', max_length=200, blank=True, null=True)
+    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "бонусы"
+        verbose_name_plural = "бонус"
+
+    def __str__(self):
+        return self.name
+
+
+class Task(models.Model):
+    """Список задач для волонтера"""
+    name = models.TextField('задача', max_length=200, blank=True, null=True)
+    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "задачи"
+        verbose_name_plural = "задача"
+
+    def __str__(self):
+        return self.name

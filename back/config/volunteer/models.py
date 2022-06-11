@@ -3,9 +3,9 @@ from django.db import models
 from users.models import Users
 
 
-class Direction(models.Model):
+class Sphere(models.Model):
     """Направление деятельности"""
-    title = models.CharField(
+    name = models.CharField(
         'направление',
         max_length=60,
         help_text="направление помощи",
@@ -14,11 +14,11 @@ class Direction(models.Model):
     )
 
     class Meta:
-        verbose_name = "направление деятельности"
-        verbose_name_plural = "направления деятельности"
+        verbose_name = "сфера деятельности"
+        verbose_name_plural = "сферу деятельности"
 
     def __str__(self):
-        return self.title
+        return self.name
 
 
 class Wallet(models.Model):
