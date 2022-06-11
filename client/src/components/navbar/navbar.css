@@ -29,4 +29,12 @@
   display: flex;
   align-items: center;
 }
+
+
+.logo {
+  position: relative;
+  width: 157px;
+  height: 57px;
+
+}
 /*# sourceMappingURL=navbar.css.map */

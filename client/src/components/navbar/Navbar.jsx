@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './navbar.css'
-import Logo from '../../assets/img/logo-volon.svg'
+import Logo from '../../assets/img/logo 1 1.svg'
 import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {logout} from "../../reducers/userReducer";
@@ -37,7 +37,7 @@ const Navbar = () => {
         <div className="navbar">
             <div className="container">
                 <img src={Logo} alt="" className="navbar__logo"/>
-                <div className="navbar__header">Волонтер</div>
+                <div className="navbar__header"></div>
                 {isAuth && <input
                     value={searchName}
                     onChange={e => searchChangeHandler(e)}
