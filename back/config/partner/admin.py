@@ -2,15 +2,21 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 
 from partner.models import Project, Vacancy, TargetAudience, \
-    HistoryResponse, Requirement, Bonus, Task
+    HistoryResponse, Requirement, Bonus, Task, NecessarySkill
 from shop.models import Category, Product
-from users.models import Users
+from users.models import Users, AdministrativeRegion
 from volunteer.models import Sphere, Wallet
 
 
 # Приложение партнеров
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
+    """Админка проекта"""
+    pass
+
+
+@admin.register(NecessarySkill)
+class NecessarySkillAdmin(admin.ModelAdmin):
     """Админка проекта"""
     pass
 
@@ -68,6 +74,12 @@ class SectionAdmin(admin.ModelAdmin):
 @admin.register(Users)
 class UsersAdmin(admin.ModelAdmin):
     """Админка пользователя"""
+    pass
+
+
+@admin.register(AdministrativeRegion)
+class AdminRegionAdmin(admin.ModelAdmin):
+    """Административный округ"""
     pass
 
 

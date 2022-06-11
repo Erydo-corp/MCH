@@ -28,10 +28,6 @@ class Users(AbstractUser):
         verbose_name = "Пользователь"
         verbose_name_plural = "Пользователи"
 
-# Вызывает ошибку при добавление вакансии
-    # def __str__(self):
-    #     return self.name
-
 
 class AdministrativeRegion(models.Model):
     """Административный округ"""
@@ -44,8 +40,9 @@ class AdministrativeRegion(models.Model):
         null=True
     )
 
-    verbose_name = "административный округ"
-    verbose_name_plural = "округи"
+    class Meta:
+        verbose_name = "округ"
+        verbose_name_plural = "административный округ"
 
     def __str__(self):
         return self.name

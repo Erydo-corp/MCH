@@ -1,14 +1,9 @@
-# from django_filters import rest_framework as filters
-# from .models import Product
+# from volunteer.models import Wallet
+# from partner.models import Vacancy
+# from shop.models import Product
 #
 #
-# class CharFilterInFilter(filters.BooleanFilter, filters.CharFilter):
-#     pass
-#
-#
-# class ProductFilter(filters.FilterSet):
-#     category = CharFilterInFilter(field_name='category__name', lookup_expr='in')
-#
-#     class Meta:
-#         model = Product
-#         fields = ['category']
+# def post():
+#     """Покупка в магазине за бонусы"""
+#     user_balance = Wallet.balance
+#     price = Product.price

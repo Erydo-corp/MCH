@@ -1,7 +1,5 @@
 from django.db import models
 
-from taggit.managers import TaggableManager
-
 from volunteer.models import Sphere
 from users.models import AdministrativeRegion, Users
 
@@ -25,8 +23,8 @@ class Requirement(models.Model):
     name = models.TextField('требование', max_length=200, blank=True, null=True)
 
     class Meta:
-        verbose_name = "требования"
-        verbose_name_plural = "требование"
+        verbose_name = "требование"
+        verbose_name_plural = "требования"
 
     def __str__(self):
         return self.name
@@ -49,8 +47,20 @@ class Task(models.Model):
     name = models.TextField('задача', max_length=200, blank=True, null=True)
 
     class Meta:
-        verbose_name = "задачи"
-        verbose_name_plural = "задача"
+        verbose_name = "задача"
+        verbose_name_plural = "задачи"
+
+    def __str__(self):
+        return self.name
+
+
+class NecessarySkill(models.Model):
+    """Необходимые навыки"""
+    name = models.TextField('необходимый навык', max_length=50)
+
+    class Meta:
+        verbose_name = "навыки"
+        verbose_name_plural = 'навык'
 
     def __str__(self):
         return self.name
@@ -63,15 +73,15 @@ class Vacancy(models.Model):
         ('offline', 'Офлайн'),
     )
     TYPE_OF_WORK = (
-        ('without payment', 'Без оплаты'),
-        ('full time', 'Постоянная'),
+        ('full time', 'Полный день'),
+        ('shift work', 'Сменный график'),
         ('internship', 'Стажировка'),
         ('side job', 'Подработка')
     )
     URGENT = (
         ('urgently', 'Срочно'),
-        ('within a week', 'В течение недели'),
-        ('within a month', 'В течение месяца')
+        ('in a week', 'В течение недели'),
+        ('in a month', 'В течение месяца')
     )
 
     # Информация от партнера
@@ -94,8 +104,8 @@ class Vacancy(models.Model):
         choices=TYPE_OF_WORK,
         default='without payment',
     )
-    start_date = models.DateTimeField('начало мероприятия', blank=True, null=True)
-    end_data = models.DateTimeField('конец мероприятия', blank=True, null=True)
+    start_date = models.DateField('начало мероприятия', blank=True, null=True)
+    end_data = models.DateField('конец мероприятия', blank=True, null=True)
     salary = models.PositiveSmallIntegerField('заработная плата', blank=True, null=True)
     coins = models.PositiveSmallIntegerField('размер бонусов', blank=True, null=True)
     urgency = models.CharField('срочность публикации', max_length=30, choices=URGENT, default='urgently')
@@ -107,8 +117,7 @@ class Vacancy(models.Model):
     # Описание требуемого волонтера
     min_age = models.PositiveSmallIntegerField('минимальный возраст', blank=True, null=True)
     max_age = models.PositiveSmallIntegerField('максимальный возраст', blank=True, null=True)
-    # Заменить на M2M
-    necessary_skills = TaggableManager('необходимые навыки')
+    necessary_skills = models.ManyToManyField(NecessarySkill, verbose_name='необходимые навыки')
     requirements = models.ManyToManyField(Requirement, verbose_name='требования')
     bonus = models.ManyToManyField(Bonus, verbose_name='бонусы волонтера')
     task = models.ManyToManyField(Task, verbose_name='задачи волонтера')
@@ -126,7 +135,12 @@ class Vacancy(models.Model):
         null=True,
         verbose_name='административный округ'
     )
+
     slug = models.SlugField('ссылка', max_length=200, unique=True)
+
+    # Для фильтров
+    is_paid_work = models.BooleanField('за работу платят рублями', default=False)
+    there_are_coins = models.BooleanField('есть бонусы для магазина', default=False)
 
     class Meta:
         verbose_name = "вакансию"
@@ -163,3 +177,6 @@ class HistoryResponse(models.Model):
     class Meta:
         verbose_name = "отклик"
         verbose_name_plural = "история откликов"
+
+    def __str__(self):
+        return self.volunteer

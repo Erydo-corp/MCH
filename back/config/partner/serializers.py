@@ -13,15 +13,16 @@ class TargetAudienceSerializers(serializers.ModelSerializer):
 
 
 class VacancyListSerializers(serializers.ModelSerializer):
-    """Вакансии"""
+    """Вакансии список"""
+    task = serializers.SlugRelatedField(slug_field="name", read_only=True, many=True)
 
     class Meta:
         model = Vacancy
-        fields = '__all__'
+        fields = ['id', 'name', 'task']
 
 
 class VacancyDetailSerializers(serializers.ModelSerializer):
-    """Вакансии"""
+    """Вакансия подробно"""
     sphere = serializers.SlugRelatedField(slug_field="name", read_only=True)
     requirements = serializers.SlugRelatedField(slug_field="name", read_only=True, many=True)
     bonus = serializers.SlugRelatedField(slug_field="name", read_only=True, many=True)

@@ -16,6 +16,8 @@ class VacancyListView(generics.ListAPIView):
     """Список вакансий"""
     queryset = Vacancy.objects.all()
     serializer_class = VacancyListSerializers
+    filter_backends = (DjangoFilterBackend,)
+    filterset_fields = ('sphere', 'region', 'min_age', 'audience', 'is_paid_work', 'there_are_coins')
 
 
 class VacancyDetailView(generics.RetrieveAPIView):

@@ -14,8 +14,8 @@ class Sphere(models.Model):
     )
 
     class Meta:
-        verbose_name = "сфера деятельности"
-        verbose_name_plural = "сферу деятельности"
+        verbose_name = "сферу"
+        verbose_name_plural = "сфера"
 
     def __str__(self):
         return self.name
@@ -32,7 +32,7 @@ class Wallet(models.Model):
 
     class Meta:
         verbose_name = "кошелек"
-        verbose_name_plural = "кошельки"
+        verbose_name_plural = "кошелек"
 
     def __str__(self):
         return self.user

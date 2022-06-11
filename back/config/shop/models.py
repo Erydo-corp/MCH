@@ -14,9 +14,6 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-    def get_absolute_url(self):
-        pass
-
 
 class Product(models.Model):
     """Товары магазина"""
@@ -40,6 +37,3 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-
-    def get_absolute_url(self):
-        pass

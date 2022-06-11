@@ -26,4 +26,3 @@ class CategoryListSerializers(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = "__all__"
-        # exclude = ['slug']
