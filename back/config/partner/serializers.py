@@ -12,8 +12,21 @@ class TargetAudienceSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class VacancySerializers(serializers.ModelSerializer):
+class VacancyListSerializers(serializers.ModelSerializer):
     """Вакансии"""
+
+    class Meta:
+        model = Vacancy
+        fields = '__all__'
+
+
+class VacancyDetailSerializers(serializers.ModelSerializer):
+    """Вакансии"""
+    sphere = serializers.SlugRelatedField(slug_field="name", read_only=True)
+    requirements = serializers.SlugRelatedField(slug_field="name", read_only=True, many=True)
+    bonus = serializers.SlugRelatedField(slug_field="name", read_only=True, many=True)
+    task = serializers.SlugRelatedField(slug_field="name", read_only=True, many=True)
+    audience = serializers.SlugRelatedField(slug_field="name", read_only=True)
 
     class Meta:
         model = Vacancy
@@ -26,7 +39,6 @@ class ProjectSerializers(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = '__all__'
-
 
 # class ProjectSerializers(serializers.ModelSerializer):
 #     """Вакансии"""

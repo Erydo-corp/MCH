@@ -20,6 +20,42 @@ class TargetAudience(models.Model):
         return self.name
 
 
+class Requirement(models.Model):
+    """Требования для вакансий"""
+    name = models.TextField('требование', max_length=200, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "требования"
+        verbose_name_plural = "требование"
+
+    def __str__(self):
+        return self.name
+
+
+class Bonus(models.Model):
+    """Список бонусов для волонтера"""
+    name = models.TextField('бонус', max_length=200, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "бонусы"
+        verbose_name_plural = "бонус"
+
+    def __str__(self):
+        return self.name
+
+
+class Task(models.Model):
+    """Список задач для волонтера"""
+    name = models.TextField('задача', max_length=200, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "задачи"
+        verbose_name_plural = "задача"
+
+    def __str__(self):
+        return self.name
+
+
 class Vacancy(models.Model):
     """Вакансии компании"""
     PARTICIPATION = (
@@ -71,7 +107,11 @@ class Vacancy(models.Model):
     # Описание требуемого волонтера
     min_age = models.PositiveSmallIntegerField('минимальный возраст', blank=True, null=True)
     max_age = models.PositiveSmallIntegerField('максимальный возраст', blank=True, null=True)
+    # Заменить на M2M
     necessary_skills = TaggableManager('необходимые навыки')
+    requirements = models.ManyToManyField(Requirement, verbose_name='требования')
+    bonus = models.ManyToManyField(Bonus, verbose_name='бонусы волонтера')
+    task = models.ManyToManyField(Task, verbose_name='задачи волонтера')
     audience = models.ForeignKey(
         TargetAudience,
         on_delete=models.SET_NULL,
@@ -123,42 +163,3 @@ class HistoryResponse(models.Model):
     class Meta:
         verbose_name = "отклик"
         verbose_name_plural = "история откликов"
-
-
-class Requirement(models.Model):
-    """Требования для вакансий"""
-    name = models.TextField('требование', max_length=200, blank=True, null=True)
-    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, blank=True, null=True)
-
-    class Meta:
-        verbose_name = "требования"
-        verbose_name_plural = "требование"
-
-    def __str__(self):
-        return self.name
-
-
-class Bonus(models.Model):
-    """Список бонусов для волонтера"""
-    name = models.TextField('задача', max_length=200, blank=True, null=True)
-    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, blank=True, null=True)
-
-    class Meta:
-        verbose_name = "бонусы"
-        verbose_name_plural = "бонус"
-
-    def __str__(self):
-        return self.name
-
-
-class Task(models.Model):
-    """Список задач для волонтера"""
-    name = models.TextField('задача', max_length=200, blank=True, null=True)
-    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, blank=True, null=True)
-
-    class Meta:
-        verbose_name = "задачи"
-        verbose_name_plural = "задача"
-
-    def __str__(self):
-        return self.name
