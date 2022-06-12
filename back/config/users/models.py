@@ -46,7 +46,8 @@ class AdministrativeRegion(models.Model):
 
     def __str__(self):
         return self.name
-      """
+
+"""
     age = models.PositiveSmallIntegerField(help_text="Возраст", null=True, blank=True)
     education = models.CharField(max_length=25, help_text="Образование")
     phone = models.PositiveBigIntegerField(help_text="Телефон", null=True, blank=True)

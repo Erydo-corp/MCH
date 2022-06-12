@@ -10,6 +10,8 @@ djangorestframework = "^3.13.1"
 pdoc3 = "^0.10.0"
 Pillow = "^9.1.1"
 djoser = "^2.1.0"
+django-filter = "^21.1"
+drf-yasg = "^1.20.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
