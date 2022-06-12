@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from users.models import Users
 from .models import Sphere, Wallet
 
 
@@ -16,4 +17,12 @@ class SphereSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Sphere
+        fields = "__all__"
+
+
+class VolunteerProfileSerializers(serializers.ModelSerializer):
+    """Профиль волонтера"""
+
+    class Meta:
+        model = Users
         fields = "__all__"
