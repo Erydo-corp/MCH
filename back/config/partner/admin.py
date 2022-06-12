@@ -8,7 +8,6 @@ from users.models import Users, AdministrativeRegion
 from volunteer.models import Sphere, Wallet
 
 
-# Приложение партнеров
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     """Админка проекта"""
@@ -103,3 +102,5 @@ class TargetAudience(admin.ModelAdmin):
 
 
 admin.site.site_header = "Сервис по размещению и поиску задач для волонтеров"
+    pass
+

@@ -47,3 +47,4 @@ class Calendar(models.Model):
 class History(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
 """
+
