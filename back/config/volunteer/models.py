@@ -3,33 +3,36 @@ from django.db import models
 from users.models import Users
 
 
-class Category(models.Model):
-    """Сферы деятельности"""
-    title = models.CharField('название сферы', max_length=60, help_text="Категория помощи", blank=True, null=True)
+class Sphere(models.Model):
+    """Направление деятельности"""
+    name = models.CharField(
+        'направление',
+        max_length=60,
+        help_text="направление помощи",
+        blank=True,
+        null=True
+    )
 
     class Meta:
-        verbose_name = "сферу деятельности"
-        verbose_name_plural = "сферы деятельности"
+        verbose_name = "сферу"
+        verbose_name_plural = "сфера"
 
     def __str__(self):
-        return self.title
+        return self.name
 
 
 class Wallet(models.Model):
     """Кошелек пользователя"""
-    # Лучше использовать связь OneToOneField
     user = models.OneToOneField(
         Users,
         on_delete=models.CASCADE,
-        null=True,
-        blank=True,
         verbose_name='волонтер'
     )
     balance = models.PositiveBigIntegerField('баланс', default=100)
 
     class Meta:
         verbose_name = "кошелек"
-        verbose_name_plural = "кошельки"
+        verbose_name_plural = "кошелек"
 
     def __str__(self):
         return self.user
