@@ -103,3 +103,5 @@ class TargetAudience(admin.ModelAdmin):
 
 
 admin.site.site_header = "Сервис по размещению и поиску задач для волонтеров"
+
+
