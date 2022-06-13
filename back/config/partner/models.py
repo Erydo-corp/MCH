@@ -67,7 +67,7 @@ class Vacancy(models.Model):
         verbose_name='сфера деятельности'
     )
     name = models.CharField('наименование вакансии', max_length=100)
-    type = models.ForeignKey(TypeWork, on_delete=models.CASCADE, verbose_name='тип работы')
+    type = models.ForeignKey(TypeWork, on_delete=models.CASCADE, verbose_name='тип работы', blank=True, null=True)
     start_date = models.DateTimeField('начало мероприятия', blank=True, null=True)
     end_data = models.DateTimeField('конец мероприятия', blank=True, null=True)
     salary = models.PositiveSmallIntegerField('заработная плата', blank=True, null=True)
@@ -124,6 +124,9 @@ class Requirement(models.Model):
     class Meta:
         verbose_name = "Требования"
         verbose_name_plural = "Требовании"
+
+    def __str__(self):
+        return self.name
 
 
 class Bonus(models.Model):

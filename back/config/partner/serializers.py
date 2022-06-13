@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import TargetAudience, Vacancy, Project, Task
+from .models import TargetAudience, Vacancy, Project, Task, Requirement, Bonus
 from users.models import Users
 
 
@@ -20,19 +20,39 @@ class TargetAudienceSerializers(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class BonusListSerializers(serializers.ModelSerializer):
+    """Бонусы волонтера(мотивация)"""
+
+    class Meta:
+        model = Bonus
+        fields = '__all__'
+
+
+class RequirementListSerializers(serializers.ModelSerializer):
+    """Требования"""
+
+    class Meta:
+        model = Requirement
+        fields = '__all__'
+
+
 class VacancyListSerializers(serializers.ModelSerializer):
     """Вакансии список"""
+    requirements = RequirementListSerializers()
+
+    # requirements = serializers.RequirementListSerializers()
 
     # task = serializers.SlugRelatedField(slug_field="name", read_only=True, many=True)
 
     class Meta:
         model = Vacancy
-        fields = ['id', 'name', ]
+        fields = ['id', 'name', 'requirements']
 
 
 class VacancyDetailSerializers(serializers.ModelSerializer):
     """Вакансия подробно"""
     sphere = serializers.SlugRelatedField(slug_field="name", read_only=True)
+
     # requirements = serializers.SlugRelatedField(slug_field="name", read_only=True, many=True)
     # bonus = serializers.SlugRelatedField(slug_field="name", read_only=True, many=True)
     # task = serializers.SlugRelatedField(slug_field="name", read_only=True, many=True)

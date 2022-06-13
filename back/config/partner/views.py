@@ -4,7 +4,8 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import TargetAudience, Vacancy, Project
 from users.models import Users
 from .serializers import TargetAudienceSerializers, VacancyListSerializers, \
-    VacancyDetailSerializers, ProjectListSerializers, PartnerProfileSerializers, ProjectDetailSerializers
+    VacancyDetailSerializers, ProjectListSerializers, PartnerProfileSerializers, \
+    ProjectDetailSerializers, RequirementListSerializers, BonusListSerializers
 
 
 class TargetAudienceView(generics.ListAPIView):
@@ -43,3 +44,8 @@ class PartnerProfileDetailView(generics.RetrieveUpdateDestroyAPIView):
     """Профиль партнера"""
     queryset = Users.objects.filter(is_partner=True)
     serializer_class = PartnerProfileSerializers
+
+
+class RequirementListView(generics.ListAPIView):
+    """Требования волонтера"""
+    pass
