@@ -2,8 +2,10 @@ from rest_framework import generics
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import TargetAudience, Vacancy, Project
+from users.models import Users
 from .serializers import TargetAudienceSerializers, VacancyListSerializers, \
-    VacancyDetailSerializers, ProjectSerializers
+    VacancyDetailSerializers, ProjectListSerializers, PartnerProfileSerializers, \
+    ProjectDetailSerializers, RequirementListSerializers, BonusListSerializers
 
 
 class TargetAudienceView(generics.ListAPIView):
@@ -26,7 +28,24 @@ class VacancyDetailView(generics.RetrieveAPIView):
     serializer_class = VacancyDetailSerializers
 
 
-class ProjectView(generics.ListAPIView):
+class ProjectListView(generics.ListAPIView):
     """Проект компании"""
     queryset = Project.objects.all()
-    serializer_class = ProjectSerializers
+    serializer_class = ProjectListSerializers
+
+
+class ProjectDetailView(generics.RetrieveAPIView):
+    """Проект компании"""
+    queryset = Project.objects.all()
+    serializer_class = ProjectDetailSerializers
+
+
+class PartnerProfileDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """Профиль партнера"""
+    queryset = Users.objects.filter(is_partner=True)
+    serializer_class = PartnerProfileSerializers
+
+
+class RequirementListView(generics.ListAPIView):
+    """Требования волонтера"""
+    pass

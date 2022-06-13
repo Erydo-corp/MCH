@@ -1,6 +1,5 @@
 from django.db import models
 
-from volunteer.models import Sphere
 from users.models import AdministrativeRegion, Users
 
 
@@ -72,18 +71,16 @@ class Vacancy(models.Model):
         ('online', 'Онлайн'),
         ('offline', 'Офлайн'),
     )
-    TYPE_OF_WORK = (
-        ('full time', 'Полный день'),
-        ('shift work', 'Сменный график'),
-        ('internship', 'Стажировка'),
-        ('side job', 'Подработка')
-    )
     URGENT = (
         ('urgently', 'Срочно'),
         ('in a week', 'В течение недели'),
         ('in a month', 'В течение месяца')
     )
-
+    TYPE_OF_WORK = (
+        ('without payment', 'Без оплаты'),
+        ('full time', 'Полный день'),
+        ('internship', 'Стажировка'),
+    )
     # Информация от партнера
     company_name = models.ForeignKey(
         Users,
@@ -93,19 +90,14 @@ class Vacancy(models.Model):
         null=True
     )
     sphere = models.ForeignKey(
-        Sphere,
+        'volunteer.Sphere',
         on_delete=models.CASCADE,
         verbose_name='сфера деятельности'
     )
+    type = models.CharField('тип работы', max_length=25, choices=TYPE_OF_WORK, default='without payment')
     name = models.CharField('наименование вакансии', max_length=100)
-    type = models.CharField(
-        'тип работы',
-        max_length=50,
-        choices=TYPE_OF_WORK,
-        default='without payment',
-    )
-    start_date = models.DateField('начало мероприятия', blank=True, null=True)
-    end_data = models.DateField('конец мероприятия', blank=True, null=True)
+    start_date = models.DateTimeField('начало мероприятия', blank=True, null=True)
+    end_data = models.DateTimeField('конец мероприятия', blank=True, null=True)
     salary = models.PositiveSmallIntegerField('заработная плата', blank=True, null=True)
     coins = models.PositiveSmallIntegerField('размер бонусов', blank=True, null=True)
     urgency = models.CharField('срочность публикации', max_length=30, choices=URGENT, default='urgently')
@@ -117,10 +109,12 @@ class Vacancy(models.Model):
     # Описание требуемого волонтера
     min_age = models.PositiveSmallIntegerField('минимальный возраст', blank=True, null=True)
     max_age = models.PositiveSmallIntegerField('максимальный возраст', blank=True, null=True)
-    necessary_skills = models.ManyToManyField(NecessarySkill, verbose_name='необходимые навыки')
     requirements = models.ManyToManyField(Requirement, verbose_name='требования')
+    key_skills = models.ManyToManyField(NecessarySkill, verbose_name='ключевые навыки')
     bonus = models.ManyToManyField(Bonus, verbose_name='бонусы волонтера')
     task = models.ManyToManyField(Task, verbose_name='задачи волонтера')
+
+    # Целевая группа
     audience = models.ForeignKey(
         TargetAudience,
         on_delete=models.SET_NULL,
@@ -128,7 +122,9 @@ class Vacancy(models.Model):
         null=True,
         verbose_name='целевая аудитория',
     )
-    region = models.OneToOneField(
+
+    # Административный округ
+    region = models.ForeignKey(
         AdministrativeRegion,
         on_delete=models.CASCADE,
         blank=True,

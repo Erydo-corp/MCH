@@ -16,7 +16,7 @@ class Users(AbstractUser):
     name = models.CharField('имя партнера', max_length=25, blank=True, null=True, help_text="Названии организации")
     is_partner = models.BooleanField('это партнер', default=False)
     category = models.ForeignKey(
-        "volunteer.Sphere",
+        'volunteer.Sphere',
         on_delete=models.PROTECT,
         blank=True,
         null=True,
@@ -46,6 +46,7 @@ class AdministrativeRegion(models.Model):
 
     def __str__(self):
         return self.name
+
 
 """
     age = models.PositiveSmallIntegerField(help_text="Возраст", null=True, blank=True)
@@ -78,4 +79,5 @@ class City(models.Model):
     )
     experience = models.CharField('Опыт', max_length=15, choices=STATUS_CHOICES)
 """
+
 
