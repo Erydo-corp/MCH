@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 
 from partner.models import Project, Vacancy, TargetAudience, \
-    HistoryResponse, Requirement, Bonus, Task, NecessarySkill, TypeWork
+    HistoryResponse, Requirement, Bonus, Task, NecessarySkill
 from shop.models import Category, Product
 from users.models import Users, AdministrativeRegion
 from volunteer.models import Sphere, Wallet
@@ -11,12 +11,6 @@ from volunteer.models import Sphere, Wallet
 # Приложение партнера
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    """Админка проекта"""
-    pass
-
-
-@admin.register(TypeWork)
-class TypeWorkAdmin(admin.ModelAdmin):
     """Админка проекта"""
     pass
 

@@ -17,6 +17,42 @@ class TargetAudience(models.Model):
         return self.name
 
 
+class Requirement(models.Model):
+    """Требования для вакансий"""
+    name = models.TextField('требование', max_length=200, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "требование"
+        verbose_name_plural = "требования"
+
+    def __str__(self):
+        return self.name
+
+
+class Bonus(models.Model):
+    """Список бонусов для волонтера"""
+    name = models.TextField('бонус', max_length=200, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "бонусы"
+        verbose_name_plural = "бонус"
+
+    def __str__(self):
+        return self.name
+
+
+class Task(models.Model):
+    """Список задач для волонтера"""
+    name = models.TextField('задача', max_length=200, blank=True, null=True)
+
+    class Meta:
+        verbose_name = "задача"
+        verbose_name_plural = "задачи"
+
+    def __str__(self):
+        return self.name
+
+
 class NecessarySkill(models.Model):
     """Необходимые навыки"""
     name = models.TextField('необходимый навык', max_length=50)
@@ -24,18 +60,6 @@ class NecessarySkill(models.Model):
     class Meta:
         verbose_name = "навыки"
         verbose_name_plural = 'навык'
-
-    def __str__(self):
-        return self.name
-
-
-class TypeWork(models.Model):
-    """Тип работы"""
-    name = models.CharField('тип работы', max_length=30, help_text='Полный день/Сменный график/Гибкий график')
-
-    class Meta:
-        verbose_name = "тип работы"
-        verbose_name_plural = 'тип работы'
 
     def __str__(self):
         return self.name
@@ -52,7 +76,11 @@ class Vacancy(models.Model):
         ('in a week', 'В течение недели'),
         ('in a month', 'В течение месяца')
     )
-
+    TYPE_OF_WORK = (
+        ('without payment', 'Без оплаты'),
+        ('full time', 'Полный день'),
+        ('internship', 'Стажировка'),
+    )
     # Информация от партнера
     company_name = models.ForeignKey(
         Users,
@@ -66,8 +94,8 @@ class Vacancy(models.Model):
         on_delete=models.CASCADE,
         verbose_name='сфера деятельности'
     )
+    type = models.CharField('тип работы', max_length=25, choices=TYPE_OF_WORK, default='without payment')
     name = models.CharField('наименование вакансии', max_length=100)
-    type = models.ForeignKey(TypeWork, on_delete=models.CASCADE, verbose_name='тип работы', blank=True, null=True)
     start_date = models.DateTimeField('начало мероприятия', blank=True, null=True)
     end_data = models.DateTimeField('конец мероприятия', blank=True, null=True)
     salary = models.PositiveSmallIntegerField('заработная плата', blank=True, null=True)
@@ -81,7 +109,10 @@ class Vacancy(models.Model):
     # Описание требуемого волонтера
     min_age = models.PositiveSmallIntegerField('минимальный возраст', blank=True, null=True)
     max_age = models.PositiveSmallIntegerField('максимальный возраст', blank=True, null=True)
-    key_skills = models.ManyToManyField(NecessarySkill, verbose_name='необходимые навыки')
+    requirements = models.ManyToManyField(Requirement, verbose_name='требования')
+    key_skills = models.ManyToManyField(NecessarySkill, verbose_name='ключевые навыки')
+    bonus = models.ManyToManyField(Bonus, verbose_name='бонусы волонтера')
+    task = models.ManyToManyField(Task, verbose_name='задачи волонтера')
 
     # Целевая группа
     audience = models.ForeignKey(
@@ -110,48 +141,6 @@ class Vacancy(models.Model):
     class Meta:
         verbose_name = "вакансию"
         verbose_name_plural = "вакансии"
-
-    def __str__(self):
-        return self.name
-
-
-class Requirement(models.Model):
-    """Требования для вакансий"""
-    name = models.CharField('название', max_length=15, blank=True, null=True)
-    description = models.TextField('требование', max_length=200, blank=True, null=True)
-    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, blank=True, null=True, verbose_name='вакансия')
-
-    class Meta:
-        verbose_name = "Требования"
-        verbose_name_plural = "Требовании"
-
-    def __str__(self):
-        return self.name
-
-
-class Bonus(models.Model):
-    """Список бонусов для волонтера"""
-    name = models.TextField('название', max_length=200, blank=True, null=True)
-    description = models.TextField('бонус', max_length=200, blank=True, null=True)
-    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, blank=True, null=True, verbose_name='вакансия')
-
-    class Meta:
-        verbose_name = "бонусы"
-        verbose_name_plural = "бонус"
-
-    def __str__(self):
-        return self.name
-
-
-class Task(models.Model):
-    """Список задач для волонтера"""
-    name = models.TextField('задача', max_length=200, blank=True, null=True)
-    description = models.TextField('описание', max_length=200, blank=True, null=True)
-    vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE, blank=True, null=True, verbose_name='вакансия')
-
-    class Meta:
-        verbose_name = "задача"
-        verbose_name_plural = "задачи"
 
     def __str__(self):
         return self.name
