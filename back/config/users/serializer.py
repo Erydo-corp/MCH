@@ -3,6 +3,7 @@ from models import Users
 
 
 class UserVolontereeSerualizer(serializers.HyperlinkedModelSerializer):
+    """Волонтер"""
     username = serializers.CharField()
     password = serializers.CharField()
     first_name = serializers.CharField()
@@ -16,6 +17,5 @@ class UserVolontereeSerualizer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Users
-
 
 

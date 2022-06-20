@@ -1,7 +1,5 @@
 from django.db import models
 
-from users.models import Users
-
 
 class Sphere(models.Model):
     """Направление деятельности"""
@@ -24,7 +22,7 @@ class Sphere(models.Model):
 class Wallet(models.Model):
     """Кошелек пользователя"""
     user = models.OneToOneField(
-        Users,
+        'users.Users',
         on_delete=models.CASCADE,
         verbose_name='волонтер'
     )
@@ -47,4 +45,3 @@ class Calendar(models.Model):
 class History(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE)
 """
-

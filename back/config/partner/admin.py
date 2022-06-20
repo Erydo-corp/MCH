@@ -8,6 +8,7 @@ from users.models import Users, AdministrativeRegion
 from volunteer.models import Sphere, Wallet
 
 
+# Приложение партнера
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     """Админка проекта"""
