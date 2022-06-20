@@ -8,11 +8,13 @@ import { BrowserRouter, Routes,
   Route,
   Link} from "react-router-dom";
 import VacansList from './Components/VacasList';
+import Nav from './Components/Nav';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+    <Nav/>
     <Routes>
       <Route path="/" element={<App />} />
       <Route path='register' element={<Register/>}/>

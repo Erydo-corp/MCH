@@ -1,18 +1,22 @@
 import React, {Component} from "react";
-import Btn from "./Btn";
 import logo from "./assets/logo.svg";
+import user from "./assets/user.svg"
 
 class Nav extends Component{
 // Не забыть в кнопки проставить урл hre
     render(){
         return(
-        <nav>
-            <img src={logo} alt="лого" width="200px"/>
-            <Btn name="item one" hre='register'>Волонтёр</Btn>
-            <Btn name="item two">Партнёр</Btn>
-            <Btn name="item three">Магазин</Btn>
-            <Btn name="item four">ЛК</Btn>
-        </nav>
+            <nav>
+        <div class="nav-logo">
+            <img src={logo} alt=""/>
+        </div>
+        <div class="btn-nav">
+            <a href=""><button class="one">Волонтер</button></a>
+            <a href=""><button class="two">Партнёр</button></a>
+            <a href=""><button class="three">Магазин</button></a>
+            <a href="" class="user"><img src={user} alt=""/></a>
+        </div>
+    </nav>
         );
     };
 }
