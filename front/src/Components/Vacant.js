@@ -12,36 +12,34 @@ class Vacant extends Component{
             </div>
             <div class="main-ul">
                 <h1>
-                    Координатор волонтёров
+                    {this.props.title}
                 </h1>
                 <h2>
                     Задачи:
                 </h2>
                 <ul class="">
-                    
                     <li>
                         <img src={li}/>
-                        <p>Курировать деятельности волонтерского движения Фонда</p>
+                        <p>{this.props.discrip_one}</p>
                     </li>
                     <li>
                         <img src={li}/>
                         <p>
-                            Организовывать и проводить культурно-массовые мероприятия 
-                        с участием волонтеров
+                          {this.props.discrip_two}  
                         </p>
                         </li>
                     <li>
                         <img src={li}/>
                         <p>
-                            Разрабатывать и внедрять системы мотивации и поощрения для волонтеров
+                            {this.props.discrip_three}
                         </p>
                     </li>
                 </ul>
-                <form action="" method="get">
-                    <button type="submit" class="btn-main-page">
+                <a href="vacansi">
+                <button class="btn-main-page">
                         ПОДРОБНЕЕ
                     </button>
-                </form>
+                </a>
             </div>
         </main>
         );
