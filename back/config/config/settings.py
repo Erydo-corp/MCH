@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "rest_framework",
+    'corsheaders',
     'django_filters',
     'drf_yasg',
     "rest_framework.authtoken",
@@ -45,7 +46,24 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
+
+
+
+CORS_ORIGIN_ALLOW_ALL = True
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1",
+    "http://127.0.0.1:8000",
+]
+CORS_ALLOW_CREDENTIALS = False
+
+APPEND_SLASH = True
 
 ROOT_URLCONF = 'config.urls'
 
@@ -138,10 +156,10 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd9v63j14jvrhjp',
-        'USER': 'nikzybdmrahpot',
-        'PASSWORD': '24ddf68badf368c4a0e1daeda044ed39801c67baf0edd6418c86fa2f9c0012c4',
-        'HOST': 'ec2-63-32-248-14.eu-west-1.compute.amazonaws.com',
+        'NAME': 'd99e3d9etr05fh',
+        'USER': 'lazvijieumgojj',
+        'PASSWORD': '932fa665f48d95d0e08cc7d644fcd6f2d5ba4fb56fe92575693cdfd9f2fab008',
+        'HOST': 'ec2-52-49-120-150.eu-west-1.compute.amazonaws.com',
         'PORT': '5432',
     }
 }

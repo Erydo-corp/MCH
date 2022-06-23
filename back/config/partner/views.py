@@ -1,4 +1,5 @@
 from rest_framework import generics
+from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import TargetAudience, Vacancy, Project
@@ -24,8 +25,11 @@ class VacancyListView(generics.ListAPIView):
 
 class VacancyDetailView(generics.RetrieveAPIView):
     """Вакансия подробно"""
-    queryset = Vacancy.objects.all()
-    serializer_class = VacancyDetailSerializers
+    def get(self, request, pk):
+        queryset = Vacancy.objects.get(pk=pk)
+        serializer_class = VacancyDetailSerializers(queryset, many=False)
+        return Response(serializer_class.data)
+
 
 
 class ProjectListView(generics.ListAPIView):

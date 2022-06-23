@@ -4,6 +4,38 @@ import callout from "./assets/Callout.svg";
 import back from "./assets/back.svg";
 
 class Vacant extends Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            vacant: {
+                    name: "",
+                    task: []
+            }
+        }
+       
+        this.loadVacant = this.loadVacant.bind(this)
+    }
+    loadVacant(){
+        fetch('http://127.0.0.1:8000/api/partner/vacancys/2/', {
+        method: "GET",
+        //mode: "no-cors",
+    })
+    .then(response => {
+        if(response.ok){
+            return response.json();
+        }else {
+            console.log("нет")
+        }
+    })
+    .then(commits => {
+        this.setState({vacant: commits});
+    });
+    }
+
+    componentDidMount(){
+        this.loadVacant()
+    }
+
     render(){
         return(
             <main>
@@ -12,26 +44,26 @@ class Vacant extends Component{
             </div>
             <div class="main-ul">
                 <h1>
-                    {this.props.title}
+                    {this.state.vacant.name}
                 </h1>
                 <h2>
                     Задачи:
                 </h2>
                 <ul class="">
                     <li>
-                        <img src={li}/>
-                        <p>{this.props.discrip_one}</p>
+                        <img src={li} alt='li'/>
+                        <p>{this.state.vacant.task[0]}</p>
                     </li>
                     <li>
-                        <img src={li}/>
+                        <img src={li} alt='li'/>
                         <p>
-                          {this.props.discrip_two}  
+                          {this.state.vacant.task[1]}  
                         </p>
                         </li>
                     <li>
-                        <img src={li}/>
+                        <img src={li} alt='li'/>
                         <p>
-                            {this.props.discrip_three}
+                            {this.state.vacant.task[2]}
                         </p>
                     </li>
                 </ul>
