@@ -9,6 +9,7 @@ import { BrowserRouter, Routes,
   Link} from "react-router-dom";
 import VacansList from './Components/VacasList';
 import Nav from './Components/Nav';
+import OneVac from './Components/OneVac';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -19,6 +20,7 @@ root.render(
       <Route path="/" element={<App />} />
       <Route path='register' element={<Register/>}/>
       <Route path='vacansi' element={<VacansList/>}/>
+      <Route path='diskription-vacansy' element={<OneVac/>}/>
     </Routes>
     </BrowserRouter>
   </React.StrictMode>

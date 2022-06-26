@@ -16,7 +16,7 @@ class Vacant extends Component{
         this.loadVacant = this.loadVacant.bind(this)
     }
     loadVacant(){
-        fetch('http://127.0.0.1:8000/api/partner/vacancys/2/', {
+        fetch('http://127.0.0.1:8000/api/partner/vacancys/1/', {
         method: "GET",
         //mode: "no-cors",
     })
@@ -67,11 +67,14 @@ class Vacant extends Component{
                         </p>
                     </li>
                 </ul>
-                <a href="vacansi">
+                <a href="diskription-vacansy">
                 <button class="btn-main-page">
                         ПОДРОБНЕЕ
                     </button>
                 </a>
+            </div>
+            <div class="main-back">
+                 <img src={back} alt=""/>
             </div>
         </main>
         );

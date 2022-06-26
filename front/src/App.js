@@ -1,4 +1,5 @@
 import './App.css';
+import './Normolaize.css';
 import MainPage from './Components/MainPage';
 import Footer from './Components/Footer';
 import React, {Component} from 'react';
