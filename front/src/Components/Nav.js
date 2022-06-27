@@ -7,7 +7,9 @@ class Nav extends Component{
         return(
             <nav>
         <div class="nav-logo">
-            <img src={logo} alt=""/>
+            <a href="/">
+                <img src={logo} alt=""/>
+            </a>
         </div>
         <div class="btn-nav">
             <a href="/register"><button class="one">Волонтер</button></a>

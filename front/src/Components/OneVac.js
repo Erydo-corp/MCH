@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import li from "./assets/li.svg";
 import callout from "./assets/Callout.svg";
 import liOrange from "./assets/li-orange.svg";
+import "../style/OneVac.css"
 class OneVac extends Component{
     constructor(props){
         super(props)
@@ -42,14 +43,16 @@ class OneVac extends Component{
 
     render(){
         for( let i = 0; this.state.vacant.requirements.length>0; i++){
-            let requirement = "#" + this.state.vacant.requirements[i];
+            let requirement = this.state.vacant.requirements;
         return(
             <div class="discriptions-vacants">
             <div class="discription-vacant">
                 <h1>{this.state.vacant.name}</h1>
                 <h2>{this.state.vacant.sphere}</h2>
                 <h3>{this.state.vacant.location}</h3>
-                <p>Требуемый опыт: {"#"+this.state.vacant.requirements[i]} {"#"+this.state.vacant.requirements[1]} {"#"+this.state.vacant.requirements[2]}</p>
+                <p>Требуемый опыт: {requirement.map((item)=>
+                    <b>{"#"+item + " "} </b>
+                )}</p>
                 {/*
                 <p>Возраст:</p>
        

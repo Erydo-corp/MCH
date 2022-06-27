@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import li from "./assets/li.svg";
 import callout from "./assets/Callout.svg";
 import back from "./assets/back.svg";
+import "../style/Vacant.css";
 
 class Vacant extends Component{
     constructor(props){
