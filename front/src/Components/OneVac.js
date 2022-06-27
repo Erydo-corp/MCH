@@ -18,7 +18,7 @@ class OneVac extends Component{
         this.loadVacant = this.loadVacant.bind(this)
     }
     loadVacant(){
-        fetch('http://127.0.0.1:8000/api/partner/vacancys/1/', {
+        fetch('http://127.0.0.1:8000/api/partner/vacancys/2/', {
         method: "GET",
         //mode: "no-cors",
     })
@@ -42,8 +42,10 @@ class OneVac extends Component{
 
 
     render(){
-        for( let i = 0; this.state.vacant.requirements.length>0; i++){
+        for( let i = 0; this.state.vacant.id>=0; i++){
             let requirement = this.state.vacant.requirements;
+            let task = this.state.vacant.task;
+            let bonus = this.state.vacant.bonus;
         return(
             <div class="discriptions-vacants">
             <div class="discription-vacant">
@@ -51,7 +53,7 @@ class OneVac extends Component{
                 <h2>{this.state.vacant.sphere}</h2>
                 <h3>{this.state.vacant.location}</h3>
                 <p>Требуемый опыт: {requirement.map((item)=>
-                    <b>{"#"+item + " "} </b>
+                    <b key={item.id}>{"#"+item + " "} </b>
                 )}</p>
                 {/*
                 <p>Возраст:</p>
@@ -60,29 +62,21 @@ class OneVac extends Component{
                  */}
                 <h2>Задачи:</h2>
                 <ul class="vacant-ul">
-                    <li>
+                    {task.map((item)=>
+                     <li key={item.id}>
                         <img src={li} alt="li"/>
-                        <p>{this.state.vacant.task[0]}</p>
+                        <p>{item}</p>
                     </li>
-                    <li>
-                        <img src={li} alt="li"/>
-                        <p>{this.state.vacant.task[1]}</p>
-                    </li>
-                    <li>
-                        <img src={li} alt="li"/>
-                        <p>{this.state.vacant.task[2]}</p>
-                    </li>
+                    )}
                 </ul>
                 <h2 class="bon">Бонусы:</h2>
                 <ul class="vacant-ul">
-                    <li>
+                    { bonus.map((item)=>
+                    <li  key={item.id}>
                         <img src={liOrange} alt="li-orange"/>
-                        <p>{this.state.vacant.bonus[0]}</p>
+                        <p>{item}</p>
                     </li>
-                    <li>
-                        <img src={liOrange} alt="li-orange"/>
-                        <p>{this.state.vacant.bonus[1]}</p>
-                    </li>
+                    )}
                 </ul>
             </div>
             <div class="lost">
@@ -91,6 +85,7 @@ class OneVac extends Component{
                 <h2>В течении месяца</h2>
                 <img src={callout} alt=""/>
             </div>
+            {console.log(i)}
         </div>
         );
     }
